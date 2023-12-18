@@ -10,8 +10,9 @@
 #define MYSCENE_H
 
 #include <rt2d/scene.h>
+#include "player.h"
+#include "platform.h"
 
-#include "myentity.h"
 
 /// @brief The MyScene class is the Scene implementation.
 class MyScene : public Scene
@@ -26,12 +27,18 @@ public:
 	/// @param deltaTime the elapsed time in seconds
 	/// @return void
 	virtual void update(float deltaTime);
+	bool rectangle2rectangle();
 
-private:
-	/// @brief the rotating square in the middle of the screen
-	MyEntity* myentity;
-	/// @brief a Timer to rotate the color every n seconds
-	Timer t;
+	private:
+	// variables
+	int velocity = 0;
+	int gravity = 750;
+	int walk = 500;
+	int jump = 300;
+
+	// pointers
+    Player*player;
+	Platform*platform;
 };
 
 #endif /* SCENE00_H */

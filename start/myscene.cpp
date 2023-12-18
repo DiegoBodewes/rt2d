@@ -1,64 +1,85 @@
-/**
- * This class describes MyScene behavior.
- *
- * Copyright 2015 Your Name <you@yourhost.com>
- */
-
 #include <fstream>
 #include <sstream>
 
 #include "myscene.h"
+#include "player.h"
+#include "platform.h"
 
 MyScene::MyScene() : Scene()
 {
-	// start the timer.
-	t.start();
+	// create a single instance of player in the middle of the screen.
+	// the Sprite is added in Constructor of player.
+	player = new Player();
+	player->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+	//player->scale = Point(0.5f, 0.5f); probleem met colliders en scaling.
+	velocity = walk;
 
-	// create a single instance of MyEntity in the middle of the screen.
-	// the Sprite is added in Constructor of MyEntity.
-	myentity = new MyEntity();
-	myentity->position = Point2(SWIDTH/2, SHEIGHT/2);
+	// platforms
+	platform = new Platform();
+	platform->position = Point2(640, 700);
+	/*platform->scale = Point(1.0f, 1.0f);*/
 
 	// create the scene 'tree'
-	// add myentity to this Scene as a child.
-	this->addChild(myentity);
-}
 
+	// add player to this Scene as a child.
+	this->addChild(player);
+	this->addChild(platform);
+}
 
 MyScene::~MyScene()
 {
 	// deconstruct and delete the Tree
-	this->removeChild(myentity);
+	this->removeChild(player);
+	this->removeChild(platform);
 
-	// delete myentity from the heap (there was a 'new' in the constructor)
-	delete myentity;
+	// delete player from the heap (there was a 'new' in the constructor)
+	delete player;
+	delete platform;
+}
+
+// method voor de collision x,y as.
+bool MyScene::rectangle2rectangle()
+{
+	return (player->position.x < platform->position.x + platform->sprite()->size.x * platform->scale.x &&
+			player->position.x + player->sprite()->size.x * player->scale.x > platform->position.x &&
+			player->position.y < platform->position.y + platform->sprite()->size.y * platform->scale.y &&
+			player->position.y + player->sprite()->size.y * player->scale.y > platform->position.y);
 }
 
 void MyScene::update(float deltaTime)
 {
-	// ###############################################################
-	// Escape key stops the Scene
-	// ###############################################################
-	if (input()->getKeyUp(KeyCode::Escape)) {
+	// controls
+
+	// links
+	if (input()->getKey(KeyCode::A))
+	{
+		player->position += Vector2(-velocity, 0) * deltaTime;
+	}
+
+	// rechts
+	if (input()->getKey(KeyCode::D))
+	{
+		player->position += Vector2(velocity, 0) * deltaTime;
+	}
+
+	// springen
+	if (input()->getKey(KeyCode::Space))
+	{
+	}
+
+	// exit
+	if (input()->getKeyUp(KeyCode::Escape))
+	{
 		this->stop();
 	}
 
-	// ###############################################################
-	// Spacebar scales myentity
-	// ###############################################################
-	if (input()->getKeyDown(KeyCode::Space)) {
-		myentity->scale = Point(0.5f, 0.5f);
-	}
-	if (input()->getKeyUp(KeyCode::Space)) {
-		myentity->scale = Point(1.0f, 1.0f);
-	}
+	// gravity
+	player->position += Vector2(0, gravity) * deltaTime;
 
-	// ###############################################################
-	// Rotate color
-	// ###############################################################
-	if (t.seconds() > 0.0333f) {
-		RGBAColor color = myentity->sprite()->color;
-		myentity->sprite()->color = Color::rotate(color, 0.01f);
-		t.start();
+
+	// collision
+	if(rectangle2rectangle()){
+		player->position.y = platform->position.y - platform->sprite()->size.y;
+		std::cout << player->scale << std::endl;
 	}
 }
