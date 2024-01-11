@@ -30,15 +30,15 @@ public:
 	bool rectangle2rectangle();
 
 	private:
-	// variables
-	int velocity = 0;
+	// variables (Vectors van maken)
+	//int velocity = 0;
 	int gravity = 750;
 	int walk = 500;
-	int jump = 300;
+	int jump = 1000;
 
 	// pointers
     Player*player;
-	Platform*platform;
+	Platform*platform; //platforms moeten in een list.
 };
 
 #endif /* SCENE00_H */

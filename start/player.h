@@ -12,6 +12,11 @@ public:
 	virtual ~Player();
 	virtual void update(float deltaTime);
 
+	Point2 velocity;
+	Point2 acceleration;
+
+	void movement(float deltaTime);
+	
 private:
 	/* add your private declarations */
 };

@@ -11,16 +11,16 @@ MyScene::MyScene() : Scene()
 	// the Sprite is added in Constructor of player.
 	player = new Player();
 	player->position = Point2(SWIDTH / 2, SHEIGHT / 2);
-	//player->scale = Point(0.5f, 0.5f); probleem met colliders en scaling.
-	velocity = walk;
+	// player->scale = Point(0.5f, 0.5f); probleem met colliders en scaling.
 
 	// platforms
 	platform = new Platform();
 	platform->position = Point2(640, 700);
 	/*platform->scale = Point(1.0f, 1.0f);*/
-
 	// create the scene 'tree'
 
+	velocity = walk;
+	
 	// add player to this Scene as a child.
 	this->addChild(player);
 	this->addChild(platform);
@@ -41,9 +41,7 @@ MyScene::~MyScene()
 bool MyScene::rectangle2rectangle()
 {
 	return (player->position.x < platform->position.x + platform->sprite()->size.x * platform->scale.x &&
-			player->position.x + player->sprite()->size.x * player->scale.x > platform->position.x &&
-			player->position.y < platform->position.y + platform->sprite()->size.y * platform->scale.y &&
-			player->position.y + player->sprite()->size.y * player->scale.y > platform->position.y);
+			player->position.x + player->sprite()->size.x * player->scale.x > platform->position.x);
 }
 
 void MyScene::update(float deltaTime)
@@ -65,6 +63,7 @@ void MyScene::update(float deltaTime)
 	// springen
 	if (input()->getKey(KeyCode::Space))
 	{
+		player->position += Vector2(0, -jump);
 	}
 
 	// exit
@@ -74,11 +73,11 @@ void MyScene::update(float deltaTime)
 	}
 
 	// gravity
-	player->position += Vector2(0, gravity) * deltaTime;
-
+	// player->position += Vector2(0, gravity) * deltaTime;
 
 	// collision
-	if(rectangle2rectangle()){
+	if (rectangle2rectangle())
+	{
 		player->position.y = platform->position.y - platform->sprite()->size.y;
 		std::cout << player->scale << std::endl;
 	}
