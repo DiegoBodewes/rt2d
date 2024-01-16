@@ -17,10 +17,9 @@ MyScene::MyScene() : Scene()
 	platform = new Platform();
 	platform->position = Point2(640, 700);
 	/*platform->scale = Point(1.0f, 1.0f);*/
+	
 	// create the scene 'tree'
 
-	velocity = walk;
-	
 	// add player to this Scene as a child.
 	this->addChild(player);
 	this->addChild(platform);
@@ -51,13 +50,13 @@ void MyScene::update(float deltaTime)
 	// links
 	if (input()->getKey(KeyCode::A))
 	{
-		player->position += Vector2(-velocity, 0) * deltaTime;
+		player->position += Vector2(player->velocity) * deltaTime;
 	}
 
 	// rechts
 	if (input()->getKey(KeyCode::D))
 	{
-		player->position += Vector2(velocity, 0) * deltaTime;
+		player->position -= Vector2(player->velocity) * deltaTime;
 	}
 
 	// springen
@@ -73,7 +72,7 @@ void MyScene::update(float deltaTime)
 	}
 
 	// gravity
-	// player->position += Vector2(0, gravity) * deltaTime;
+	player->position += Vector2(0, gravity) * deltaTime;
 
 	// collision
 	if (rectangle2rectangle())

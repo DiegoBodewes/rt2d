@@ -5,15 +5,14 @@
 
 #include <rt2d/entity.h>
 
-class Player: public Entity
-{
+class Player: public Entity {
 public:
 	Player();
 	virtual ~Player();
 	virtual void update(float deltaTime);
 
-	Point2 velocity;
-	Point2 acceleration;
+	Vector2 velocity;
+	Vector2 acceleration;
 
 	void movement(float deltaTime);
 	
