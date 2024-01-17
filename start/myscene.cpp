@@ -12,12 +12,13 @@ MyScene::MyScene() : Scene()
 	player = new Player();
 	player->position = Point2(SWIDTH / 2, SHEIGHT / 2);
 	// player->scale = Point(0.5f, 0.5f); probleem met colliders en scaling.
+	velocity = walk;
 
 	// platforms
 	platform = new Platform();
 	platform->position = Point2(640, 700);
 	/*platform->scale = Point(1.0f, 1.0f);*/
-	
+
 	// create the scene 'tree'
 
 	// add player to this Scene as a child.
@@ -50,19 +51,19 @@ void MyScene::update(float deltaTime)
 	// links
 	if (input()->getKey(KeyCode::A))
 	{
-		player->position += Vector2(player->velocity) * deltaTime;
+		player->position += Vector2(-velocity, 0) * deltaTime;
 	}
 
 	// rechts
 	if (input()->getKey(KeyCode::D))
 	{
-		player->position -= Vector2(player->velocity) * deltaTime;
+		player->position += Vector2(velocity, 0) * deltaTime;
 	}
 
 	// springen
-	if (input()->getKey(KeyCode::Space))
+	if (input()->getKeyDown(KeyCode::Space))
 	{
-		player->position += Vector2(0, -jump);
+		currentJumpHeight = jump;
 	}
 
 	// exit
@@ -79,5 +80,17 @@ void MyScene::update(float deltaTime)
 	{
 		player->position.y = platform->position.y - platform->sprite()->size.y;
 		std::cout << player->scale << std::endl;
+	}
+
+
+	if (currentJumpHeight > 0)
+	{
+		player->position += Vector2(0, -currentJumpHeight);
+		currentJumpHeight -= gravity * deltaTime;
+	}
+	else
+	{
+		// Reset the jump height when the player hits the ground
+		currentJumpHeight = 0;
 	}
 }
