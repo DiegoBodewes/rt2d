@@ -10,9 +10,9 @@ MyScene::MyScene() : Scene()
 	// create a single instance of player in the middle of the screen.
 	// the Sprite is added in Constructor of player.
 	player = new Player();
-	player->position = Point2(SWIDTH / 2, SHEIGHT / 2);
-	// player->scale = Point(0.5f, 0.5f); probleem met colliders en scaling.
-	velocity = walk;
+	player->position = Point2(SWIDTH / 2, 100);
+	player->scale = Point(0.5f, 0.5f); //probleem met colliders en scaling.
+	velocityH = walk;
 
 	// platforms
 	platform = new Platform();
@@ -36,61 +36,64 @@ MyScene::~MyScene()
 	delete player;
 	delete platform;
 }
-
+  
+// collision x as.
 // method voor de collision x,y as.
 bool MyScene::rectangle2rectangle()
 {
 	return (player->position.x < platform->position.x + platform->sprite()->size.x * platform->scale.x &&
-			player->position.x + player->sprite()->size.x * player->scale.x > platform->position.x);
+			player->position.x + player->sprite()->size.x * player->scale.x > platform->position.x &&
+			player->position.y < platform->position.y + platform->sprite()->size.y * platform->scale.y &&
+			player->position.y + player->sprite()->size.y * player->scale.y > platform->position.y);
 }
 
 void MyScene::update(float deltaTime)
 {
-	// controls
-
-	// links
-	if (input()->getKey(KeyCode::A))
-	{
-		player->position += Vector2(-velocity, 0) * deltaTime;
-	}
-
-	// rechts
-	if (input()->getKey(KeyCode::D))
-	{
-		player->position += Vector2(velocity, 0) * deltaTime;
-	}
-
-	// springen
-	if (input()->getKeyDown(KeyCode::Space))
-	{
-		currentJumpHeight = jump;
-	}
-
 	// exit
 	if (input()->getKeyUp(KeyCode::Escape))
 	{
 		this->stop();
 	}
+	// controls
 
+	// links
+	if (input()->getKey(KeyCode::A))
+	{
+		player->position += Vector2(-velocityH, 0) * deltaTime;
+	}
+
+	// rechts
+	if (input()->getKey(KeyCode::D))
+	{
+		player->position += Vector2(velocityH, 0) * deltaTime;
+	}
+
+	// springen
+	if (input()->getKeyDown(KeyCode::Space))
+	{
+		// currentJumpHeight = jump;
+		player->acceleration += Vector2(0, -jump);
+
+	}
 	// gravity
-	player->position += Vector2(0, gravity) * deltaTime;
+	player->acceleration += Vector2(0, gravity) * deltaTime;
 
 	// collision
 	if (rectangle2rectangle())
 	{
-		player->position.y = platform->position.y - platform->sprite()->size.y;
-		std::cout << player->scale << std::endl;
+		player->position.y = (SHEIGHT-50);
+		//std::cout << player->scale << std::endl;
 	}
 
 
-	if (currentJumpHeight > 0)
-	{
-		player->position += Vector2(0, -currentJumpHeight);
-		currentJumpHeight -= gravity * deltaTime;
-	}
-	else
-	{
-		// Reset the jump height when the player hits the ground
-		currentJumpHeight = 0;
-	}
+	// if (currentJumpHeight > 0)
+	// {
+	// 	player->position += Vector2(0, -currentJumpHeight);
+	// 	currentJumpHeight -= gravity * deltaTime;
+	// }
+	// else
+	// {
+	// 	// Reset the jump height when the player hits the ground
+	// 	currentJumpHeight = 0;
+	// }
 }

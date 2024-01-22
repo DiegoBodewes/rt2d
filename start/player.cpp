@@ -23,5 +23,7 @@ Player::~Player()
 
 void Player::update(float deltaTime)
 {
-
+    this->velocity += this->acceleration * deltaTime;
+    this->position += this->velocity * deltaTime;
+    this->acceleration *= 0;
 }

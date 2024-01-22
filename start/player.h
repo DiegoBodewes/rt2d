@@ -14,7 +14,7 @@ public:
 	Vector2 velocity;
 	Vector2 acceleration;
 
-	void movement(float deltaTime);
+	// void movement(float deltaTime);
 	
 private:
 	/* add your private declarations */
