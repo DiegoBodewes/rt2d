@@ -11,7 +11,7 @@ MyScene::MyScene() : Scene()
 	// the Sprite is added in Constructor of player.
 	player = new Player();
 	player->position = Point2(SWIDTH / 2, 100);
-	player->scale = Point(0.5f, 0.5f); //probleem met colliders en scaling.
+	//player->scale = Point(0.5f, 0.5f); // probleem met colliders en scaling.
 	velocityH = walk;
 
 	// platforms
@@ -36,9 +36,8 @@ MyScene::~MyScene()
 	delete player;
 	delete platform;
 }
-  
-// collision x as.
-// method voor de collision x,y as.
+
+// collision x, y.
 bool MyScene::rectangle2rectangle()
 {
 	return (player->position.x < platform->position.x + platform->sprite()->size.x * platform->scale.x &&
@@ -54,7 +53,6 @@ void MyScene::update(float deltaTime)
 	{
 		this->stop();
 	}
-	// controls
 
 	// links
 	if (input()->getKey(KeyCode::A))
@@ -69,31 +67,25 @@ void MyScene::update(float deltaTime)
 	}
 
 	// springen
-	if (input()->getKeyDown(KeyCode::Space))
+	if (input()->getKey(KeyCode::Space) && player->isGrounded)
 	{
-		// currentJumpHeight = jump;
 		player->acceleration += Vector2(0, -jump);
-
+		player->isGrounded = false;
 	}
+	
 	// gravity
 	player->acceleration += Vector2(0, gravity) * deltaTime;
+	if (player->acceleration.y < 0)
+	{
+		player->isGrounded = false;
+	}
 
 	// collision
 	if (rectangle2rectangle())
 	{
-		player->position.y = (SHEIGHT-50);
-		//std::cout << player->scale << std::endl;
+		float overlapY = player->position.y + player->sprite()->size.y * player->scale.y - platform->position.y;
+		player->position.y -= overlapY;
+		player->velocity *= 0;
+		player->isGrounded = true;
 	}
-
-
-	// if (currentJumpHeight > 0)
-	// {
-	// 	player->position += Vector2(0, -currentJumpHeight);
-	// 	currentJumpHeight -= gravity * deltaTime;
-	// }
-	// else
-	// {
-	// 	// Reset the jump height when the player hits the ground
-	// 	currentJumpHeight = 0;
-	// }
 }

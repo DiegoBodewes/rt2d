@@ -33,9 +33,9 @@ public:
 	// variables (Vectors van maken)
 	//float currentJumpHeight = 0;
 	int velocityH = 0;
-	float gravity = 9500;
+	float gravity = 99999;
 	int walk = 500;
-	int jump = 20000;
+	int jump = 30000;
 
 	// pointers
     Player*player;
