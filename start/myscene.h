@@ -29,18 +29,15 @@ public:
 	bool rectangle2rectangle();
 
 private:
-	// variables (Vectors van maken)
-	// float currentJumpHeight = 0;
+	// Variables
 	int velocityH = 0;
 	float gravity = 10;
 	int walk = 500;
-	int jump = 600;
-
-	std::vector<Platform *> platforms;
-
-	// pointers
+	int jump = 700;
+	
+	// Pointers
 	Player *player;
-	Platform *platform; // platforms moeten in een list.
+	std::vector<Platform *> platforms;
 };
 
 #endif /* SCENE00_H */

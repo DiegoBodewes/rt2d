@@ -11,9 +11,10 @@ public:
 	Platform();
 	virtual ~Platform();
 	virtual void update(float deltaTime);
+	static std::vector<Platform*> allPlatforms;
 
 private:
-	/* add your private declarations */
+	/* Add your private declarations */
 };
 
 #endif /* PLATFORM_H */

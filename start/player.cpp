@@ -13,6 +13,7 @@ Player::~Player()
 
 }
 
+// Physics
 void Player::update(float deltaTime)
 {
     this->velocity += this->acceleration * deltaTime;
