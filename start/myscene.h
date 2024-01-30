@@ -32,9 +32,9 @@ private:
 	// variables (Vectors van maken)
 	// float currentJumpHeight = 0;
 	int velocityH = 0;
-	float gravity = 99999;
+	float gravity = 10;
 	int walk = 500;
-	int jump = 30000;
+	int jump = 600;
 
 	std::vector<Platform *> platforms;
 
