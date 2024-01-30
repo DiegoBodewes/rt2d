@@ -13,7 +13,6 @@
 #include "player.h"
 #include "platform.h"
 
-
 /// @brief The MyScene class is the Scene implementation.
 class MyScene : public Scene
 {
@@ -29,17 +28,19 @@ public:
 	virtual void update(float deltaTime);
 	bool rectangle2rectangle();
 
-	private:
+private:
 	// variables (Vectors van maken)
-	//float currentJumpHeight = 0;
+	// float currentJumpHeight = 0;
 	int velocityH = 0;
 	float gravity = 99999;
 	int walk = 500;
 	int jump = 30000;
 
+	std::vector<Platform *> platforms;
+
 	// pointers
-    Player*player;
-	Platform*platform; //platforms moeten in een list.
+	Player *player;
+	Platform *platform; // platforms moeten in een list.
 };
 
 #endif /* SCENE00_H */

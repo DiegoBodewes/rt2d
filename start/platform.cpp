@@ -5,7 +5,7 @@
 Platform::Platform(): Entity()
 {
 	this->addSprite("assets/square.tga");
-    this->sprite()->color = WHITE;
+    this->sprite()->color = CYAN;
 }
 
 Platform::~Platform()
