@@ -11,13 +11,13 @@ MyScene::MyScene() : Scene()
 	// The Sprite is added in Constructor of player.
 	// Player
 	player = new Player();
-	player->position = Point2(SWIDTH / 2, 100);
+	player->position = Point2(SWIDTH / 2, 500);
 	player->scale = Point(1.0f, 1.0f);
 	velocityH = walk;
 	this->addChild(player);
 
 	// Create platforms + Platform position
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
 		Platform *platform = new Platform();
 
@@ -27,13 +27,34 @@ MyScene::MyScene() : Scene()
 			platform->position = Point2(640, 700);
 			break;
 		case 1:
-			platform->position = Point2(440, 550);
+			platform->position = Point2(760, 700);
 			break;
 		case 2:
-			platform->position = Point2(440, 550);
+			platform->position = Point2(520, 700);
+			break;
+		case 3:
+			platform->position = Point2(50, 550);
+			break;
+		case 4:
+			platform->position = Point2(170, 550);
+			break;
+		case 5:
+			platform->position = Point2(1230, 550);
+			break;
+		case 6:
+			platform->position = Point2(1110, 550);
+			break;
+		case 7:
+			platform->position = Point2(640, 300);
+			break;
+		case 8:
+			platform->position = Point2(760, 300);
+			break;
+		case 9:
+			platform->position = Point2(520, 300);
 			break;
 		}
-
+		
 		platforms.push_back(platform);
 		this->addChild(platform);
 	}
@@ -114,6 +135,7 @@ void MyScene::update(float deltaTime)
 			{
 				minOverlapY = overlapY;
 			}
+
 		}
 		player->position.y -= minOverlapY;
 		player->velocity *= 0;
