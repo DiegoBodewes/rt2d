@@ -33,7 +33,7 @@ private:
 	int velocityH = 0;
 	float gravity = 10;
 	int walk = 500;
-	int jump = 700;
+	int jump = 1000;
 	
 	// Pointers
 	Player *player;

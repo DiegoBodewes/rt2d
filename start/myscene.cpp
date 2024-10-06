@@ -125,7 +125,7 @@ void MyScene::update(float deltaTime)
 	}
 
 	// Collision + Grounded
-	if (rectangle2rectangle())
+	if (rectangle2rectangle() && player->velocity.y > 0)
 	{
 		float minOverlapY = FLT_MAX;
 		for (auto &platform : platforms)
@@ -141,4 +141,7 @@ void MyScene::update(float deltaTime)
 		player->velocity *= 0;
 		player->isGrounded = true;
 	}
+
+	// camera()->position = player->position;
+
 }

@@ -2,13 +2,13 @@
 
 #include "platform.h"
 
-std::vector<Platform*> Platform::allPlatforms;
+//std::vector<Platform*> Platform::allPlatforms;
 
 Platform::Platform(): Entity()
 {
-	this->addSprite("assets/square.tga");
-    this->sprite()->color = CYAN;
-    allPlatforms.push_back(this);
+	this->addSprite("assets/platform.tga");
+    this->sprite()->color = RED;
+    //allPlatforms.push_back(this);
 }
 
 Platform::~Platform()

@@ -5,7 +5,7 @@
 Player::Player(): Entity()
 {
 	this->addSprite("assets/square.tga");
-    this->sprite()->color = RED;
+    this->sprite()->color = GREEN;
 }
 
 Player::~Player()

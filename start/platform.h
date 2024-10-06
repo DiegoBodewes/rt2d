@@ -11,7 +11,7 @@ public:
 	Platform();
 	virtual ~Platform();
 	virtual void update(float deltaTime);
-	static std::vector<Platform*> allPlatforms;
+	//static std::vector<Platform*> allPlatforms;
 
 private:
 	/* Add your private declarations */
